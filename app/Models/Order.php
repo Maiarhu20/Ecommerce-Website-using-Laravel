@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
@@ -13,7 +14,7 @@ class Order extends Model
     {
         return $this->hasOne(User::class);
     }
-    
+
     public function items()
     {
         return $this->hasMany(Item::class);
