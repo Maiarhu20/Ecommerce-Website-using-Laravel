@@ -3,10 +3,19 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserProfileController;
 
 Route::get('/', [ProductController::class, 'home'])->name('home');
 
 Route::resource('products',ProductController::class);
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('userProfile',UserProfileController::class);
+    Route::get('order/{orderId}',[UserProfileController::class,'show'])->name('orders.show');
+});
+
+Route::post('logout', [UserProfileController::class, 'logout'])->name('logout');
+
 
 Route::get('/contact', function () {
     return view('user_view.shared.contact');

@@ -70,9 +70,13 @@
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2">
                         <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
-                    <a href="{{route('register')}}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 " >
+                    <a href="{{route('userProfile.index')}}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 " >
                         <i class="zmdi zmdi-account-circle"></i>
                     </a>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="logoutButton" >Logout</button>
+                    </form>
                 </div>
             </nav>
         </div>
