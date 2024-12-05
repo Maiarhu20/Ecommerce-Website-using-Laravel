@@ -8,7 +8,8 @@ class Category extends Model
 {
     protected $fillable=[
         'name',
-        //'image', //هي عاملاها كدة معرفش لية
+        'image_slide',
+        'image_banner',
     ];
     public function products(){
         return $this->hasMany(Product::class);

@@ -2,14 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
-Route::get('/', function () {
-    return view('user_view.home');
-})->name('home');
+Route::get('/', [ProductController::class, 'home'])->name('home');
 
-Route::get('/product', function () {
-    return view('user_view.product.product');
-})->name('product');
+Route::resource('products',ProductController::class);
 
 Route::get('/contact', function () {
     return view('user_view.shared.contact');
@@ -22,10 +19,6 @@ Route::get('/about', function () {
 Route::get('/blog', function () {
     return view('user_view.shared.blog');
 })->name('blog');
-
-Route::get('/product_details', function () {
-    return view('user_view.product.product_details');
-})->name('product_details');
 
 Route::get('/shoping_cart', function () {
     return view('user_view.cart.shoping_cart');
