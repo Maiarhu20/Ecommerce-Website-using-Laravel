@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
 
 // Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::prefix('admin')->group(function () {
-    Route::get('/', [AdminController::class, 'AllProducts'])->name('products.index'); // List all products
+    Route::get('/', [AdminController::class, 'AllProducts'])->name('admin.products.index'); // List all products
     Route::get('/products/create', [AdminController::class, 'createProduct'])->name('products.create'); // Create product form
     Route::post('/products/store', [AdminController::class, 'storeProduct'])->name('products.store'); // Store product
     Route::get('/products/{id}/edit', [AdminController::class, 'editProduct'])->name('products.edit'); // Edit product form
@@ -58,7 +58,7 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('admin/categories')->group(function () {
-    Route::get('/', [AdminController::class, 'AllCategories'])->name('categories.index');
+    Route::get('/', [AdminController::class, 'AllCategories'])->name('admin.categories.index');
     Route::get('/create', [AdminController::class, 'createCategory'])->name('categories.create');
     Route::post('/store', [AdminController::class, 'storeCategory'])->name('categories.store');
     Route::get('/{id}/edit', [AdminController::class, 'editCategory'])->name('categories.edit');
@@ -69,7 +69,7 @@ Route::prefix('admin/categories')->group(function () {
 // Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
 
 Route::prefix('/admin/orders')->group(function () {
-    Route::get('/', [AdminController::class, 'AllOrders'])->name('orders.index');
+    Route::get('/', [AdminController::class, 'AllOrders'])->name('admin.orders.index');
     Route::get('/{orderId}',[AdminController::class,'showOrder'])->name('admin.orders.show');
     Route::delete('/{orderId}', [AdminController::class, 'removeOrder'])->name('admin.orders.remove');
 });

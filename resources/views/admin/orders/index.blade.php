@@ -12,6 +12,9 @@
                         <div class="d-flex align-items-center">
                             <div class="text-uppercase font-weight-bold">Order ID: <span>{{$order->id}}</span></div>
                         </div>
+                        <div class="d-flex align-items-center">
+                            <div class="text-uppercase font-weight-bold">User ID: <span>{{$order->user_id}}</span></div>
+                        </div>
                         <div class="fs-8 text-muted"><span>{{$order->createt_at}}</span></div>
                     </div>
                 </div>

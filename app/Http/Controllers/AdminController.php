@@ -60,7 +60,7 @@ class AdminController extends Controller
             }
         }
 
-        return redirect()->route('products.index');
+        return redirect()->route('admin.products.index');
     }
 
     public function editProduct($id)
@@ -73,32 +73,30 @@ class AdminController extends Controller
 
 
     public function updateProduct(Request $request, $id)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'description' => 'required|string',
-        'price' => 'required|numeric',
-        'category_id' => 'required|exists:categories,id',
-        'quantity' => 'required|integer',
-        // 'images' => 'nullable|array',
-        // 'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id',
+            'quantity' => 'required|integer',
+        ]);
 
-    $product = Product::findOrFail($id);
-    $product->update($request->only('name', 'description', 'price', 'category_id', 'quantity'));
+        $product = Product::findOrFail($id);
+        $product->update($request->only('name', 'description', 'price', 'category_id', 'quantity'));
 
-    if ($request->hasFile('images')) {
-        foreach ($request->file('images') as $image) {
-            $image_name = $image->getClientOriginalName();
-            $image->move(public_path('upload/products'), $image_name);
-            MultiImage::create([
-                'image_path' => $image_name,
-                'product_id' => $product->id,
-            ]);
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $image_name = $image->getClientOriginalName();
+                $image->move(public_path('upload/products'), $image_name);
+                MultiImage::create([
+                    'image_path' => $image_name,
+                    'product_id' => $product->id,
+                ]);
+            }
         }
+        return redirect()->route('admin.products.index');
     }
-    return redirect()->route('products.index');
-}
 
     public function destroyProduct($id)
     {
@@ -106,7 +104,7 @@ class AdminController extends Controller
         $product->multiimage()->delete();
         $product->delete();
 
-        return redirect()->route('products.index');
+        return redirect()->route('admin.products.index');
     }
 //-------------------------------------------------------------------------------------------------------------
     
@@ -147,7 +145,7 @@ class AdminController extends Controller
         }
     
         Category::create($data);
-        return redirect()->route('categories.index');
+        return redirect()->route('admin.categories.index');
     }
 
 
@@ -185,7 +183,7 @@ class AdminController extends Controller
         }
         $category->save();
 
-        return redirect()->route('categories.index');
+        return redirect()->route('admin.categories.index');
     }
 
     
@@ -193,7 +191,7 @@ class AdminController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
-        return redirect()->route('categories.index');
+        return redirect()->route('admin.categories.index');
     }
     
 
@@ -215,8 +213,9 @@ class AdminController extends Controller
     public function removeOrder($orderId){
 
         $order = Order::findOrFail($orderId);
+        $order->items()->delete();
         $order->delete();
-        return redirect()->route('orders.index');
+        return redirect()->route('admin.orders.index');
     }
 
 
