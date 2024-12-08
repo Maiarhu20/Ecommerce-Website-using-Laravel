@@ -3,13 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Item;
 use App\Models\MultiImage;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    public function adminLogout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
+    }
+
     public function index()
     {
         return view('admin.index');
@@ -19,8 +28,9 @@ class AdminController extends Controller
 
     public function AllProducts()
     {
+        $user= Auth::user();
         $products = Product::all();
-        return view('admin.products.index', compact('products'));
+        return view('admin.products.index', compact('products','user'));
     }
 
 
@@ -100,14 +110,16 @@ class AdminController extends Controller
 
     public function destroyProduct($id)
     {
+
         $product = Product::findOrFail($id);
         $product->multiimage()->delete();
+        Item::where('product_id',$id)->delete();
         $product->delete();
 
         return redirect()->route('admin.products.index');
     }
 //-------------------------------------------------------------------------------------------------------------
-    
+
 
     public function AllCategories()
     {
@@ -127,23 +139,23 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
-    
+
         $data = $request->only('name');
-    
+
         if ($request->hasFile('image_slide')) {
             $image = $request->file('image_slide');
             $image_name = $image->getClientOriginalName();
             $image->move(public_path('upload/categories'), $image_name);
             $data['image_slide'] = $image_name;
         }
-    
+
         if ($request->hasFile('image_banner')) {
             $image = $request->file('image_banner');
             $image_name = $image->getClientOriginalName();
             $image->move(public_path('upload/categories'), $image_name);
             $data['image_banner'] =$image_name;
         }
-    
+
         Category::create($data);
         return redirect()->route('admin.categories.index');
     }
@@ -153,7 +165,7 @@ class AdminController extends Controller
     {
         $category = Category::findOrFail($id);
         return view('admin.categories.edit', compact('category'));
-       
+
     }
 
 
@@ -186,14 +198,17 @@ class AdminController extends Controller
         return redirect()->route('admin.categories.index');
     }
 
-    
+
     public function destroyCategory($id)
     {
         $category = Category::findOrFail($id);
+        foreach ($category->products as $product) {
+            $this->destroyProduct($product->id);
+        }
         $category->delete();
         return redirect()->route('admin.categories.index');
     }
-    
+
 
 
 //--------------------------------------------------------------------------------------------

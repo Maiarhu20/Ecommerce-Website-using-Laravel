@@ -47,7 +47,9 @@ Route::middleware('auth')->group(function () {
 
 
 // Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-Route::prefix('admin')->group(function () {
+Route::post('/admin/logout',[AdminController::class,'adminLogout'])->name('admin.logout');
+
+Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'AllProducts'])->name('admin.products.index'); // List all products
     Route::get('/products/create', [AdminController::class, 'createProduct'])->name('products.create'); // Create product form
     Route::post('/products/store', [AdminController::class, 'storeProduct'])->name('products.store'); // Store product
@@ -57,18 +59,18 @@ Route::prefix('admin')->group(function () {
     // Route::delete('/admin/products/image/{id}', [AdminController::class, 'deleteImage'])->name('product.image.delete');
 });
 
-Route::prefix('admin/categories')->group(function () {
+Route::middleware(['auth'])->prefix('admin/categories')->group(function () {
     Route::get('/', [AdminController::class, 'AllCategories'])->name('admin.categories.index');
     Route::get('/create', [AdminController::class, 'createCategory'])->name('categories.create');
     Route::post('/store', [AdminController::class, 'storeCategory'])->name('categories.store');
     Route::get('/{id}/edit', [AdminController::class, 'editCategory'])->name('categories.edit');
-    Route::put('/{id}', [AdminController::class, 'updateCategory'])->name('categories.update'); 
-    Route::delete('/{id}', [AdminController::class, 'destroyCategory'])->name('categories.destroy'); 
+    Route::put('/{id}', [AdminController::class, 'updateCategory'])->name('categories.update');
+    Route::delete('/{id}', [AdminController::class, 'destroyCategory'])->name('categories.destroy');
 });
 
 // Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
 
-Route::prefix('/admin/orders')->group(function () {
+Route::middleware(['auth'])->prefix('/admin/orders')->group(function () {
     Route::get('/', [AdminController::class, 'AllOrders'])->name('admin.orders.index');
     Route::get('/{orderId}',[AdminController::class,'showOrder'])->name('admin.orders.show');
     Route::delete('/{orderId}', [AdminController::class, 'removeOrder'])->name('admin.orders.remove');
