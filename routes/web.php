@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -10,9 +11,11 @@ Route::get('/', [ProductController::class, 'home'])->name('home');
 
 Route::resource('products',ProductController::class);
 
+
 Route::middleware(['auth'])->group(function () {
     Route::resource('userProfile',UserProfileController::class);
     Route::get('order/{orderId}',[UserProfileController::class,'show'])->name('orders.show');
+    Route::resource('cart',CartController::class);
 });
 
 Route::post('logout', [UserProfileController::class, 'logout'])->name('logout');
@@ -62,8 +65,8 @@ Route::prefix('admin/categories')->group(function () {
     Route::get('/create', [AdminController::class, 'createCategory'])->name('categories.create');
     Route::post('/store', [AdminController::class, 'storeCategory'])->name('categories.store');
     Route::get('/{id}/edit', [AdminController::class, 'editCategory'])->name('categories.edit');
-    Route::put('/{id}', [AdminController::class, 'updateCategory'])->name('categories.update'); 
-    Route::delete('/{id}', [AdminController::class, 'destroyCategory'])->name('categories.destroy'); 
+    Route::put('/{id}', [AdminController::class, 'updateCategory'])->name('categories.update');
+    Route::delete('/{id}', [AdminController::class, 'destroyCategory'])->name('categories.destroy');
 });
 
 // Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
