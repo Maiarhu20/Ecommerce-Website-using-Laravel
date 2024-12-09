@@ -1,10 +1,15 @@
 @extends('admin.index')
 
 @section('content')
+
 <div class="container">
+    <div class="row">
+        <h2 class="mb-4" style="color: #000"><strong>Welcome <span style="color: #cece74">{{ $user->name }} </span>!</strong></h2>
+    </div>
+
     {{-- <h1 class="mb-4 text-center">All Products</h1> --}}
     <a href="{{ route('products.create') }}" class="btn-create-product mb-4">
-        <i class="fa fa-plus"></i> 
+        <i class="fa fa-plus"></i>
     </a>
 
     @if(session('success'))
@@ -16,12 +21,12 @@
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm">
                 @if(!$product->multiimage->isEmpty())
-                    <img src="{{ asset('upload/products/' . $product->multiimage->first()->image_path) }}" 
-                         class="card-img-top" alt="Product Image" style="width: 100%; height: 380px; object-fit: cover;
+                    <img src="{{ asset('upload/products/' . $product->multiimage->first()->image_path) }}"
+                        class="card-img-top" alt="Product Image" style="width: 100%; height: 380px; object-fit: cover;
                     display: block; border-radius: 5px; border: 1px solid #ddd;">
                 @else
-                    <img src="{{ asset('upload/products/placeholder.jpg') }}" 
-                         class="card-img-top" alt="No Image" style="width: 100%; height: 380px; object-fit: cover;
+                    <img src="{{ asset('upload/products/placeholder.jpg') }}"
+                        class="card-img-top" alt="No Image" style="width: 100%; height: 380px; object-fit: cover;
                     display: block; border-radius: 5px; border: 1px solid #ddd;">
                 @endif
 
