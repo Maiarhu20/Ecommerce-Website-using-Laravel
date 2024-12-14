@@ -11,7 +11,7 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Name: {{ $user->name }} </li>
                                         <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Email : {{$user->email}}</li>
-                                        <li class="list-group-item"><i class="fa fa-map-marker float-right"></i>Address : Address</li>
+                                        <li class="list-group-item"><i class="fa fa-map-marker float-right"></i>Address : {{$user->address}}</li>
                                     </ul>
                                 </div>
                         </div>
