@@ -22,20 +22,30 @@
               <x-text-input id="phone" class="block mt-1 w-full" type="number" name="phone" :value="old('phone')" required autocomplete="username" />
               <x-input-error :messages="$errors->get('phone')" class="mt-2" />
          </div>
-       
+
          <!-- address -->
          <div class="mt-4">
                <x-input-label for="address" :value="__('Address')" />
                <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" required autocomplete="username" />
                <x-input-error :messages="$errors->get('address')" class="mt-2" />
           </div>
-       
+
           <!-- Gender -->
           <div class="mt-4">
-               <x-input-label for="gender" :value="__('Gender')" />
-               <x-text-input id="gender" class="block mt-1 w-full" type="text" name="gender" :value="old('gender')" required autocomplete="username" />
-               <x-input-error :messages="$errors->get('gender')" class="mt-2" />
-          </div>
+            <x-input-label for="gender" :value="__('Gender')" />
+            <div class="flex items-center">
+                <label for="male" class="mr-4">
+                    <input type="radio" id="male" name="gender" value="male" class="mr-2" :checked="old('gender') == 'male'" required>
+                    Male &emsp;
+                </label>
+                <label for="female" class="mr-4">
+                    <input type="radio" id="female" name="gender" value="female" class="mr-2" :checked="old('gender') == 'female'" required>
+                    Female
+                </label>
+            </div>
+            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
+        </div>
+
 
         <!-- Password -->
         <div class="mt-4">

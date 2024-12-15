@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserProfileController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [ProductController::class, 'home'])->name('home');
 
@@ -34,6 +35,11 @@ Route::get('/blog', function () {
 })->name('blog');
 
 Route::get('/shoping_cart', function () {
+    $user = Auth::user();
+    if(!$user)
+    {
+        return redirect()->route("login");
+    }
     return view('user_view.cart.shoping_cart');
 })->name('shoping_cart');
 

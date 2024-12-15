@@ -74,10 +74,17 @@
                     <a href="{{route('userProfile.index')}}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 " >
                         <i class="zmdi zmdi-account-circle"></i>
                     </a>
+                    @auth
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="logoutButton" >Logout</button>
                     </form>
+                    @else
+                    <form action="{{ route('login') }}" method="GET">
+                        @csrf
+                        <button type="submit" class="logoutButton" >Login</button>
+                    </form>
+                    @endauth
                 </div>
             </nav>
         </div>

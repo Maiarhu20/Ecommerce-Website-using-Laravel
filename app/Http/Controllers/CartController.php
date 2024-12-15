@@ -18,7 +18,12 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = Cart::where("user_id", Auth::user()->id)->first();
+        $user = Auth::user();
+        if(!$user)
+        {
+            return redirect()->route("login");
+        }
+        $cart = Cart::where("user_id", $user->id)->first();
         $items = [];
         if ($cart) {
             $items = Item::where("cart_id", $cart->id)->get();
