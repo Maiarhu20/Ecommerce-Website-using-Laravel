@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
 // Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/admin/logout',[AdminController::class,'adminLogout'])->name('admin.logout');
 
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'AllProducts'])->name('admin.products.index'); // List all products
     Route::get('/products/create', [AdminController::class, 'createProduct'])->name('products.create'); // Create product form
     Route::post('/products/store', [AdminController::class, 'storeProduct'])->name('products.store'); // Store product
@@ -61,7 +61,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     // Route::delete('/admin/products/image/{id}', [AdminController::class, 'deleteImage'])->name('product.image.delete');
 });
 
-Route::middleware(['auth'])->prefix('admin/categories')->group(function () {
+Route::middleware(['auth','admin'])->prefix('admin/categories')->group(function () {
     Route::get('/', [AdminController::class, 'AllCategories'])->name('admin.categories.index');
     Route::get('/create', [AdminController::class, 'createCategory'])->name('categories.create');
     Route::post('/store', [AdminController::class, 'storeCategory'])->name('categories.store');
@@ -72,7 +72,7 @@ Route::middleware(['auth'])->prefix('admin/categories')->group(function () {
 
 // Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
 
-Route::middleware(['auth'])->prefix('/admin/orders')->group(function () {
+Route::middleware(['auth','admin'])->prefix('/admin/orders')->group(function () {
     Route::get('/', [AdminController::class, 'AllOrders'])->name('admin.orders.index');
     Route::get('/{orderId}',[AdminController::class,'showOrder'])->name('admin.orders.show');
     Route::delete('/{orderId}', [AdminController::class, 'removeOrder'])->name('admin.orders.remove');
