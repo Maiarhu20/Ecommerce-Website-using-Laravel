@@ -18,6 +18,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('order/store',[UserProfileController::class,'orderStore'])->name('order.store');
     Route::get('order/{orderId}',[UserProfileController::class,'show'])->name('orders.show');
     Route::resource('cart',CartController::class);
+    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/delete/{id}', [CartController::class, 'destroy'])->name('cart.delete');
 });
 
 Route::post('logout', [UserProfileController::class, 'logout'])->name('logout');

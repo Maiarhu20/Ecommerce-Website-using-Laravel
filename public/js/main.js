@@ -1,6 +1,12 @@
 
 (function ($) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     "use strict";
+
 
     /*[ Load page ]
     ===========================================================*/
@@ -23,7 +29,7 @@
         overlayParentElement : 'html',
         transition: function(url){ window.location.href = url; }
     });
-    
+
     /*[ Back to top ]
     ===========================================================*/
     var windowH = $(window).height()/2;
@@ -52,26 +58,26 @@
     else {
         var posWrapHeader = 0;
     }
-    
+
 
     if($(window).scrollTop() > posWrapHeader) {
         $(headerDesktop).addClass('fix-menu-desktop');
-        $(wrapMenu).css('top',0); 
-    }  
+        $(wrapMenu).css('top',0);
+    }
     else {
         $(headerDesktop).removeClass('fix-menu-desktop');
-        $(wrapMenu).css('top',posWrapHeader - $(this).scrollTop()); 
+        $(wrapMenu).css('top',posWrapHeader - $(this).scrollTop());
     }
 
     $(window).on('scroll',function(){
         if($(this).scrollTop() > posWrapHeader) {
             $(headerDesktop).addClass('fix-menu-desktop');
-            $(wrapMenu).css('top',0); 
-        }  
+            $(wrapMenu).css('top',0);
+        }
         else {
             $(headerDesktop).removeClass('fix-menu-desktop');
-            $(wrapMenu).css('top',posWrapHeader - $(this).scrollTop()); 
-        } 
+            $(wrapMenu).css('top',posWrapHeader - $(this).scrollTop());
+        }
     });
 
 
@@ -104,7 +110,7 @@
                     $(arrowMainMenu).removeClass('turn-arrow-main-menu-m');
                 }
             });
-                
+
         }
     });
 
@@ -137,7 +143,7 @@
             var filterValue = $(this).attr('data-filter');
             $topeContainer.isotope({filter: filterValue});
         });
-        
+
     });
 
     // init Isotope
@@ -176,7 +182,7 @@
         if($('.js-show-search').hasClass('show-search')) {
             $('.js-show-search').removeClass('show-search');
             $('.panel-search').slideUp(400);
-        }    
+        }
     });
 
     $('.js-show-search').on('click',function(){
@@ -186,7 +192,7 @@
         if($('.js-show-filter').hasClass('show-filter')) {
             $('.js-show-filter').removeClass('show-filter');
             $('.panel-filter').slideUp(400);
-        }    
+        }
     });
 
 
@@ -214,14 +220,80 @@
 
     /*==================================================================
     [ +/- num product ]*/
-    $('.btn-num-product-down').on('click', function(){
-        var numProduct = Number($(this).next().val());
-        if(numProduct > 0) $(this).next().val(numProduct - 1);
+    $('.btn-num-product-down').on('click', function () {
+        const button = $(this);
+        const inputField = button.next(); // Input field
+        const id = button.data('id'); // Get the item ID
+        let numProduct = Number(inputField.val()); // Current quantity
+
+        if (numProduct > 1) {
+            const newQuantity = numProduct - 1; // Calculate new quantity
+            inputField.val(newQuantity); // Update input field immediately
+
+            // Make an Ajax request to update the quantity on the server
+            $.ajax({
+                url: "cart/update/" + id,
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    quantity: newQuantity,
+
+                },
+                success: function (response) {
+                    console.log('Quantity updated successfully:', response);
+                    $('.total').text('$' + response.total);
+                    button.closest('tr').find('.item_total').text('$' + response.item_total);
+                },
+                error: function (xhr) {
+                    console.error('Failed to update quantity:', xhr.responseText);
+                }
+            });
+        }
+        else{
+            $.ajax({
+                url: "cart/delete/" + id,
+                method: 'DELETE',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                success: function (response) {
+                    console.log('Item deleted successfully:', response);
+                    button.closest('tr').remove();
+                    $('.total').text('$' + response.total);
+                },
+                error: function (xhr) {
+                    console.error('Failed to delete item:', xhr.responseText);
+                }
+            });
+        }
     });
 
-    $('.btn-num-product-up').on('click', function(){
-        var numProduct = Number($(this).prev().val());
-        $(this).prev().val(numProduct + 1);
+    // Increment button functionality
+    $('.btn-num-product-up').on('click', function () {
+        const button = $(this);
+        const inputField = button.prev(); // Input field
+        const id = button.data('id'); // Get the item ID
+        let numProduct = Number(inputField.val()); // Current quantity
+
+        const newQuantity = numProduct + 1; // Calculate new quantity
+        inputField.val(newQuantity); // Update input field immediately
+
+        // Make an Ajax request to update the quantity on the server
+        $.ajax({
+            url: "cart/update/" + id,
+            method: 'POST',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                quantity: newQuantity,
+
+            },
+            success: function (response) {
+                console.log('Quantity updated successfully:', response);
+                $('.total').text('$' + response.total);
+                button.closest('tr').find('.item_total').text('$' + response.item_total);
+            },
+            error: function (xhr) {
+                console.error('Failed to update quantity:', xhr.responseText);
+            }
+        });
     });
 
     /*==================================================================
@@ -265,7 +337,7 @@
             }
         });
     });
-    
+
     /*==================================================================
     [ Show modal1 ]*/
     $('.js-show-modal1').on('click',function(e){

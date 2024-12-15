@@ -1,5 +1,9 @@
 @extends('user_view.layout.layout')
 @section('content')
+<html>
+<header>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+</header>
     <section class="bg0 p-t-120 p-b-140">
         <!-- breadcrumb -->
         <div class="container">
@@ -15,7 +19,7 @@
             </div>
         </div>
         @php
-            $total = 0.0;
+            $total = 0.00;
             foreach ($items as $item) {
                 $total += $item->quantity * $item->product->price;
             }
@@ -49,15 +53,30 @@
                                         <td class="column-3">$ {{$item->product->price}}</td>
                                         <td class="column-4">
                                             <div class="wrap-num-product flex-w m-l-auto m-r-0" style="display: flex; justify-content: center; align-items: center;">
-                                                <span class="mtext-104 cl3 txt-center num-product"
-                                                      style="width: 60px; height: 40px; text-align: center; font-size: 16px; line-height: 40px; display: inline-block; border: 1px solid #ccc; background-color: #d3d3d3;">
-                                                    {{$item->quantity}}
-                                                </span>
+                                                    <div
+                                                    class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
+                                                    data-id="{{$item->id}}"
+                                                    data-action="decrement">
+                                                    <i class="fs-16 zmdi zmdi-minus"></i>
+                                                </div>
+                                                <input
+                                                    class="mtext-104 cl3 txt-center num-product"
+                                                    type="number"
+                                                    name="num-product2"
+                                                    value="{{$item->quantity}}"
+                                                    data-id="{{$item->id}}"
+                                                    disabled>
+                                                <div
+                                                    class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
+                                                    data-id="{{$item->id}}"
+                                                    data-action="increment">
+                                                    <i class="fs-16 zmdi zmdi-plus"></i>
+                                                </div>
                                             </div>
 
                                         </td>
 
-                                        <td class="column-5">$ {{$item->quantity * $item->product->price}}</td>
+                                        <td class="column-5 item_total">$ {{$item->quantity * $item->product->price}}</td>
                                     </tr>
                                     @endforeach
 
@@ -76,7 +95,7 @@
                                                     <i class="fs-16 zmdi zmdi-minus"></i>
                                                 </div>
 
-                                                <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product2" value="1">
+                                                <
 
                                                 <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                                     <i class="fs-16 zmdi zmdi-plus"></i>
@@ -108,7 +127,7 @@
                                 </div>
 
                                 <div class="size-209">
-                                    <span class="mtext-110 cl2">
+                                    <span class="mtext-110 cl2 total">
                                         ${{$total}}
                                     </span>
                                 </div>
@@ -160,7 +179,7 @@
                                 </div>
 
                                 <div class="size-209 p-t-1">
-                                    <span class="mtext-110 cl2">
+                                    <span class="mtext-110 cl2 total">
                                         ${{$total}}
                                     </span>
                                 </div>
@@ -175,5 +194,6 @@
             </div>
         </form>
     </section>
+</html>
 @endsection
 

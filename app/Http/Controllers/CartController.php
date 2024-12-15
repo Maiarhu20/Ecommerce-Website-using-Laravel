@@ -114,7 +114,25 @@ class CartController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = Auth::user();
+        $item = Item::find($id);
+        $item->update(["quantity"=>$request->quantity]);
+        $cart = Cart::where("user_id", $user->id)->first();
+        $items = [];
+        if ($cart) {
+            $items = Item::where("cart_id", $cart->id)->with("product")->get();
+        }
+        $total = 0.00;
+        foreach ($items as $item) {
+            $total += $item->product->price*$item->quantity;
+        }
+        $item_total = $item->quantity * $item->product->price;
+        return response()->json([
+            'total' => number_format($total, 2),
+            'item_total' => number_format( $item_total,2),
+            'message' => 'Cart updated successfully'
+        ]);
+
     }
 
     /**
@@ -122,6 +140,22 @@ class CartController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = Auth::user();
+        $item = Item::find($id);
+        $item->delete();
+        $cart = Cart::where("user_id", $user->id)->first();
+        $items = [];
+        if ($cart) {
+            $items = Item::where("cart_id", $cart->id)->with("product")->get();
+        }
+        $total = 0.00;
+        foreach ($items as $item) {
+            $total += $item->product->price*$item->quantity;
+        }
+        return response()->json([
+            'total' => number_format($total, 2),
+            'message' => 'Cart updated successfully'
+        ]);
+
     }
 }
