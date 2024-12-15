@@ -47,8 +47,8 @@
                             <a href="{{route('products.index')}}">Shop</a>
                         </li>
 
-                        <li class="label1" data-label1="hot">
-                            <a href="{{route('shoping_cart')}}">Features</a>
+                        <li>
+                            <a href="{{route('shoping_cart')}}">Shopping Cart</a>
                         </li>
 
                         <li class="{{Route::currentRouteName() == 'blog'? 'active-menu' : ''}}">

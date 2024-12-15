@@ -34,14 +34,7 @@ Route::get('/blog', function () {
     return view('user_view.shared.blog');
 })->name('blog');
 
-Route::get('/shoping_cart', function () {
-    $user = Auth::user();
-    if(!$user)
-    {
-        return redirect()->route("login");
-    }
-    return view('user_view.cart.shoping_cart');
-})->name('shoping_cart');
+Route::get('/shoping_cart', [CartController::class, 'index'])->name('shoping_cart');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
