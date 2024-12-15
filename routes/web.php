@@ -15,6 +15,7 @@ Route::resource('products',ProductController::class);
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('userProfile',UserProfileController::class);
+    Route::post('order/store',[UserProfileController::class,'orderStore'])->name('order.store');
     Route::get('order/{orderId}',[UserProfileController::class,'show'])->name('orders.show');
     Route::resource('cart',CartController::class);
 });

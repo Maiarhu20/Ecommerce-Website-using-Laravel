@@ -22,7 +22,9 @@
         @endphp
 
         <!-- Shoping Cart -->
-        <form class="bg0 p-t-75 p-b-85">
+        <form class="bg0 p-t-75 p-b-85" method="POST" action="{{route('order.store')}}">
+        @csrf
+            <input type="hidden" name="items" value="{{ json_encode($items) }}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
@@ -144,12 +146,6 @@
 
                                         <div class="bor8 bg0 m-b-22">
                                             <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="Postcode / Zip">
-                                        </div>
-
-                                        <div class="flex-w">
-                                            <div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
-                                                Update Totals
-                                            </div>
                                         </div>
 
                                     </div>

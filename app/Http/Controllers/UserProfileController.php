@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Item;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +35,25 @@ class UserProfileController extends Controller
     {
         //
     }
-
+    public function orderStore(Request $request)
+    {
+        $items = json_decode($request->input('items'), true);
+        $order = Order::create([
+            'user_id'=> Auth::id(),
+        ]);
+        foreach ($items as $item) {
+            $itemModel = Item::find($item['id']);
+            $product = Product::find($item['product_id']);
+            $product->update([
+                'quantity'=> $product->quantity -= $item['quantity'],
+            ]);
+            $itemModel->update([
+                'cart_id'=> null,
+                'order_id'=> $order->id,
+            ]);
+        }
+        return redirect()->route('userProfile.index');
+    }
     /**
      * Display the specified resource.
      */
