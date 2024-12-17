@@ -15,7 +15,7 @@
                         <div class="d-flex align-items-center">
                             <div class="text-uppercase font-weight-bold">User ID: <span>{{$order->user_id}}</span></div>
                         </div>
-                        <div class="fs-8 text-muted"><span>{{$order->createt_at}}</span></div>
+                        <div class="fs-8 text-muted"><span>{{$order->created_at}}</span></div>
                     </div>
                 </div>
                 <div class="col-lg-12 mt-3">
@@ -52,9 +52,9 @@
             display: inline-block;
             border: none;
         }
-    
-       
-    
+
+
+
         /* Edit Button (Grey) */
         .btn-edit {
             background-color: #cece74; /* Grey */
@@ -65,13 +65,13 @@
             box-shadow: 0 2px 6px rgba(108, 117, 125, 0.2);
             text-decoration: none; /* Removing underline */
         }
-    
+
         .btn-edit:hover {
             background-color: #5a636b;
             color: #fff;
             box-shadow: 0 4px 8px rgba(108, 117, 125, 0.4);
         }
-    
+
         /* Delete Button (Grey) - Same as Edit (no border) */
         .btn-delete {
             background-color: #cece74; /* Grey */
@@ -83,13 +83,13 @@
             text-decoration: none; /* Removing underline */
             border: none; /* Removed border */
         }
-    
+
         .btn-delete:hover {
             background-color: #5a636b;
             color: #fff;
             box-shadow: 0 4px 8px rgba(108, 117, 125, 0.4);
         }
-    
+
 
     .grid-container {
     display: grid;
