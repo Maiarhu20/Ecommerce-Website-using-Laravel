@@ -38,11 +38,19 @@
                     <a href="{{ route('products.edit', $product->id) }}" class="btn-edit">Edit</a>
 
                     <!-- Delete Button -->
+                    @if ($product->deleted == false)
                     <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: inline-block;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-delete" >Delete</button>
                     </form>
+                    @else
+                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-delete" >UnDelete</button>
+                    </form>
+                    @endif
                 </div>
             </div>
         </div>

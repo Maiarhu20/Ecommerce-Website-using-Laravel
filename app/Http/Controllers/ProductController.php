@@ -12,13 +12,13 @@ class ProductController extends Controller
      */
     public function home()
     {
-        $products=Product::with(['multiimage', 'category'])->get();
+        $products=Product::where('deleted',False)->with(['multiimage', 'category'])->get();
         $categories = Category::all();
         return view('user_view.home', compact('products', 'categories'));
     }
     public function index()
     {
-        $products=Product::with(['multiimage', 'category'])->get();
+        $products=Product::where('deleted',False)->with(['multiimage', 'category'])->get();
         $categories = Category::all();
         return view('user_view.product.product',compact('products','categories'));
     }

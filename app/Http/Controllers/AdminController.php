@@ -112,6 +112,16 @@ class AdminController extends Controller
     {
 
         $product = Product::findOrFail($id);
+        // $product->multiimage()->delete();
+        //Item::where('product_id',$id)->delete();
+        $product->update(['deleted'=> !$product->deleted]);
+
+        return redirect()->route('admin.products.index');
+    }
+    public function destroyProductPerm($id)
+    {
+
+        $product = Product::findOrFail($id);
         $product->multiimage()->delete();
         Item::where('product_id',$id)->delete();
         $product->delete();
@@ -203,7 +213,7 @@ class AdminController extends Controller
     {
         $category = Category::findOrFail($id);
         foreach ($category->products as $product) {
-            $this->destroyProduct($product->id);
+            $this->destroyProductperm($product->id);
         }
         $category->delete();
         return redirect()->route('admin.categories.index');
