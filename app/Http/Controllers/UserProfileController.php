@@ -46,8 +46,15 @@ class UserProfileController extends Controller
         foreach ($items as $item) {
             $itemModel = Item::find($item['id']);
             $product = Product::find($item['product_id']);
+            if($product->quantity < $itemModel->quantity){
+                return redirect()->route('cart.index')->with('error', "Only $product->quantity of $product->name available");
+            }
+        }
+        foreach ($items as $item) {
+            $itemModel = Item::find($item['id']);
+            $product = Product::find($item['product_id']);
             $product->update([
-                'quantity'=> $product->quantity -= $item['quantity'],
+                'quantity'=> $product->quantity -= $itemModel->quantity,
             ]);
             $itemModel->update([
                 'cart_id'=> null,
