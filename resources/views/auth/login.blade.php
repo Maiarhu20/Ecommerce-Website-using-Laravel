@@ -28,7 +28,7 @@
       <div class="forget">
         <label for="remember">
           <input name="remember" id="remember_me" type="checkbox">
-          <p>Remember me</p>
+          <p>{{ __('Remember me') }}</p>
         </label>
 
       </div>
