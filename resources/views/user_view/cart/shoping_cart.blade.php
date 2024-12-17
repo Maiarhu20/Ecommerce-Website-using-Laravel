@@ -185,9 +185,14 @@
                                 </div>
                             </div>
 
-                            <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                            <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" {{count($items) == 0 ? 'disabled' : ''}}>
                                 Proceed to Checkout
                             </button>
+                            @if(session('error'))
+                                <p style="color: red; text-align: center; margin-top: 15px;">
+                                    {{ session('error') }}
+                                </p>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -68,7 +68,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{route('admin.products.index')}}">
                 <img src="{{ asset('images/icons/logo-02.png') }}" alt="Logo">
             </a>
 

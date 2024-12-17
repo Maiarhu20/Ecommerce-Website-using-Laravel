@@ -38,9 +38,11 @@ class UserProfileController extends Controller
     public function orderStore(Request $request)
     {
         $items = json_decode($request->input('items'), true);
-        $order = Order::create([
-            'user_id'=> Auth::id(),
-        ]);
+        if(empty($items))
+        {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
+        }
+        $order = Order::create(['user_id'=> Auth::id()]);
         foreach ($items as $item) {
             $itemModel = Item::find($item['id']);
             $product = Product::find($item['product_id']);
