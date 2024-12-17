@@ -73,6 +73,10 @@ class UserProfileController extends Controller
     public function show($orderId)
     {
         $order = Order::findOrFail($orderId);
+        if(!$order || $order->user_id != Auth::id())
+        {
+            return abort(404);
+        }
         return view('user_view.profile.order_datials',compact('order'));
     }
 
