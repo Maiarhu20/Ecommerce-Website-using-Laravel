@@ -16,6 +16,9 @@ class UserProfileController extends Controller
     public function index()
     {
         $user= Auth::user();
+        if($user->role == 'admin'){
+            return redirect()->route('admin.products.index');
+        }
         $orders= Order::where('user_id',$user->id)->get();
         return view('user_view.profile.profile', compact('user','orders'));
     }

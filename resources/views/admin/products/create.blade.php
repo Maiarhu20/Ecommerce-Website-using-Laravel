@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Create Product</h1>
-    
+
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -26,7 +26,7 @@
         </div>
         <div class="form-group">
             <label for="price">Price</label>
-            <input type="number" name="price" id="price" class="form-control" required>
+            <input type="number" step="0.01" name="price" id="price" class="form-control" required>
         </div>
 
         <div class="form-group">
@@ -48,7 +48,7 @@
             <input type="file" name="images[]" id="images" class="form-control" multiple onchange="previewImages()">
             <div id="image-preview" class="mt-3"></div> <!-- Preview images here -->
         </div>
-        
+
         <button type="submit" class="btn-create-product">Create Product</button>
     </form>
 </div>
@@ -119,7 +119,7 @@
         const previewContainer = document.getElementById('image-preview');
         previewContainer.innerHTML = ''; // Clear the preview container
         const files = document.getElementById('images').files;
-        
+
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             const reader = new FileReader();

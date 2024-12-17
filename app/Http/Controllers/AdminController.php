@@ -45,7 +45,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|numeric',
+            'price' => 'required|decimal:0,2',
             'category_id' => 'required|exists:categories,id',
             'quantity' => 'required|integer',
         ]);
@@ -87,7 +87,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|numeric',
+            'price' => 'required|decimal:0,2',
             'category_id' => 'required|exists:categories,id',
             'quantity' => 'required|integer',
         ]);

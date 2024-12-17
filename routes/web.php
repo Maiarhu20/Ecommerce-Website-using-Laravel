@@ -40,7 +40,7 @@ Route::get('/blog', function () {
 Route::get('/shoping_cart', [CartController::class, 'index'])->name('shoping_cart');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.products.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

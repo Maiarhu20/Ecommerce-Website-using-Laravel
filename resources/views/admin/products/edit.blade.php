@@ -11,7 +11,7 @@
     <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        
+
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" name="name" id="name" class="form-control" value="{{ $product->name }}" required>
@@ -24,7 +24,7 @@
 
         <div class="form-group">
             <label for="price">Price</label>
-            <input type="number" name="price" id="price" class="form-control" value="{{ $product->price }}" required>
+            <input type="number" step="0.01" name="price" id="price" class="form-control" value="{{ $product->price }}" required>
         </div>
 
         <div class="form-group">
@@ -57,12 +57,12 @@
                         @method('DELETE')
                         <button type="submit" class="image-delete-btn" onclick="return confirm('Are you sure you want to delete this image?')">X</button>
                     </form> --}}
-                    
+
                 </div>
                 @endforeach
             </div>
         </div>
-        
+
         <button type="submit" class="btn-create-product">Update Product</button>
     </form>
 </div>
@@ -133,7 +133,7 @@
         const previewContainer = document.getElementById('image-preview');
         previewContainer.innerHTML = ''; // Clear the preview container
         const files = document.getElementById('images').files;
-        
+
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             const reader = new FileReader();

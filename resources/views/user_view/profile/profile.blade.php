@@ -25,7 +25,7 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="text-uppercase font-weight-bold">Order ID: <span>{{$order->id}}</span></div>
                                             </div>
-                                            <div class="fs-8 text-muted"><span>{{$order->createt_at}}</span></div>
+                                            <div class="fs-8 text-muted"><span>{{$order->created_at}}</span></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mt-3">
