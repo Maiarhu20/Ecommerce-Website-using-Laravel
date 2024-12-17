@@ -45,14 +45,15 @@ class UserProfileController extends Controller
         {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
         }
-        $order = Order::create(['user_id'=> Auth::id()]);
         foreach ($items as $item) {
             $itemModel = Item::find($item['id']);
             $product = Product::find($item['product_id']);
-            if($product->quantity < $itemModel->quantity){
+            if($product->quantity < $itemModel->quantity)
+            {
                 return redirect()->route('cart.index')->with('error', "Only $product->quantity of $product->name available");
             }
         }
+        $order = Order::create(['user_id'=> Auth::id()]);
         foreach ($items as $item) {
             $itemModel = Item::find($item['id']);
             $product = Product::find($item['product_id']);
