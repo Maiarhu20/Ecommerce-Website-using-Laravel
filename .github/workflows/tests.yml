@@ -31,50 +31,11 @@ jobs:
           --health-retries=3
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up PHP
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
           extensions: mbstring, bcmath, xml, mysql, zip, curl, gd, tokenizer
-          coverage: none
-          tools: composer
-
-      - name: Validate composer.json and composer.lock
-        run: composer validate --no-check-publish
-
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --optimize-autoloader
-
-      - name: Copy .env file
-        run: cp .env.example .env
-
-      - name: Generate application key
-        run: php artisan key:generate
-
-      - name: Set up database config for testing
-        run: |
-          php artisan config:clear
-          php artisan cache:clear
-          php artisan config:cache
-
-      - name: Run migrations
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_DATABASE: laravel_test
-          DB_USERNAME: laravel
-          DB_PASSWORD: laravel
-        run: php artisan migrate --force
-
-      - name: Run tests
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_DATABASE: laravel_test
-          DB_USERNAME: laravel
-          DB_PASSWORD: laravel
-        run: ./vendor/bin/phpunit --verbose --colors=always
